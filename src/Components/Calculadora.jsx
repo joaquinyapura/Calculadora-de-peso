@@ -59,7 +59,7 @@ export const Calculadora = () => {
           <h2>Su peso actual es</h2>
           <p className="font-bold text-4xl">200</p>
           <img src={rect} alt="" srcset="" className="w-20" />
-          <p>podrias </p>
+          <p>podrias</p>
         </div>
       </div>
     </div>
