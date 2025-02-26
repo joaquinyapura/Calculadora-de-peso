@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
 import rect from "../assets/react.svg";
+import { split } from "postcss/lib/list";
 
 export const Calculadora = () => {
   const [peso, setPeso] = useState("");
   const [altura, setAltura] = useState("");
+  const [imc, setImc] = useState("");
 
   const handleImput = (e) => {
     setPeso(e.target.value);
@@ -16,6 +18,18 @@ export const Calculadora = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (altura == 0 || peso == 0) {
+      alert("introduzca valores validos");
+    } else {
+      let imc = peso / (altura * altura);
+      imc = imc.toFixed(2);
+      setImc(imc);
+    }
+  };
+
+  const reload = () => {
+    window.location.reload();
   };
 
   return (
@@ -31,7 +45,7 @@ export const Calculadora = () => {
             <p className="font-semibold">peso</p>
             <input
               className="p-2 rounded-md border-gray-600 border-2 "
-              type="text"
+              type="number"
               placeholder="peso"
               onChange={handleImput}
               value={peso}
@@ -41,7 +55,8 @@ export const Calculadora = () => {
             <p className="font-semibold">altura</p>
             <input
               className="p-2 rounded-md border-gray-600 border-2"
-              type="text"
+              type="number"
+              step={0.1}
               placeholder="altura"
               onChange={handleImputAltura}
               value={altura}
@@ -53,11 +68,13 @@ export const Calculadora = () => {
           >
             Sumbit
           </button>
-          <button className="bg-slate-200 rounded-md  p-2">reload</button>
+          <button onClick={reload} className="bg-slate-200 rounded-md  p-2">
+            reload
+          </button>
         </form>
         <div className="flex flex-col items-center mt-4">
-          <h2>Su peso actual es</h2>
-          <p className="font-bold text-4xl">200</p>
+          <h2>Su IMC es </h2>
+          <p className="font-bold text-4xl">{imc}</p>
           <img src={rect} alt="" srcset="" className="w-20" />
           <p>podrias</p>
         </div>
