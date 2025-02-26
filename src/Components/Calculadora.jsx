@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 
-import rect from "../assets/react.svg";
-import { split } from "postcss/lib/list";
+import underweightImg from "../assets/underweight.png";
+import overweightImg from "../assets/overweight.png";
+import healthyImg from "../assets/healthy.png";
 
 export const Calculadora = () => {
   const [peso, setPeso] = useState("");
   const [altura, setAltura] = useState("");
   const [imc, setImc] = useState("");
+  const [imagen, setImagen] = useState(null);
+  const [mensaje, setMensaje] = useState("ingrese valores");
 
   const handleImput = (e) => {
     setPeso(e.target.value);
@@ -25,6 +28,18 @@ export const Calculadora = () => {
       let imc = peso / (altura * altura);
       imc = imc.toFixed(2);
       setImc(imc);
+
+      if (imc < 18.5) {
+        setMensaje("tenes bajo peso");
+        setImagen(underweightImg);
+      } else if (imc >= 18.5 && imc < 24.9) {
+        setMensaje("tu peso es normal");
+
+        setImagen(healthyImg);
+      } else if (imc >= 25 && imc < 29.9) {
+        setMensaje("Tenés sobrepeso");
+        setImagen(overweightImg);
+      }
     }
   };
 
@@ -75,8 +90,10 @@ export const Calculadora = () => {
         <div className="flex flex-col items-center mt-4">
           <h2>Su IMC es </h2>
           <p className="font-bold text-4xl">{imc}</p>
-          <img src={rect} alt="" srcset="" className="w-20" />
-          <p>podrias</p>
+
+          {imagen && <img src={imagen} alt="" className="w-20" />}
+
+          <p>{mensaje}</p>
         </div>
       </div>
     </div>
